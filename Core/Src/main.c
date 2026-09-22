@@ -34,6 +34,8 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#define SEG_ON  GPIO_PIN_RESET
+#define SEG_OFF GPIO_PIN_SET
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -44,8 +46,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-static const uint32_t greenTime = 3000;
-static const uint32_t yellowTime = 2000;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -57,6 +58,84 @@ static void MX_GPIO_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+
+static void set7SEG(GPIO_PinState a,
+                    GPIO_PinState b,
+                    GPIO_PinState c,
+                    GPIO_PinState d,
+                    GPIO_PinState e,
+                    GPIO_PinState f,
+                    GPIO_PinState g)
+{
+    HAL_GPIO_WritePin(SEG_A_GPIO_Port, SEG_A_Pin, a);
+    HAL_GPIO_WritePin(SEG_B_GPIO_Port, SEG_B_Pin, b);
+    HAL_GPIO_WritePin(SEG_C_GPIO_Port, SEG_C_Pin, c);
+    HAL_GPIO_WritePin(SEG_D_GPIO_Port, SEG_D_Pin, d);
+    HAL_GPIO_WritePin(SEG_E_GPIO_Port, SEG_E_Pin, e);
+    HAL_GPIO_WritePin(SEG_F_GPIO_Port, SEG_F_Pin, f);
+    HAL_GPIO_WritePin(SEG_G_GPIO_Port, SEG_G_Pin, g);
+}
+
+void display7SEG(int num)
+{
+    switch (num)
+    {
+        case 0:
+            set7SEG(SEG_ON, SEG_ON, SEG_ON, SEG_ON,
+                    SEG_ON, SEG_ON, SEG_OFF);
+            break;
+
+        case 1:
+            set7SEG(SEG_OFF, SEG_ON, SEG_ON, SEG_OFF,
+                    SEG_OFF, SEG_OFF, SEG_OFF);
+            break;
+
+        case 2:
+            set7SEG(SEG_ON, SEG_ON, SEG_OFF, SEG_ON,
+                    SEG_ON, SEG_OFF, SEG_ON);
+            break;
+
+        case 3:
+            set7SEG(SEG_ON, SEG_ON, SEG_ON, SEG_ON,
+                    SEG_OFF, SEG_OFF, SEG_ON);
+            break;
+
+        case 4:
+            set7SEG(SEG_OFF, SEG_ON, SEG_ON, SEG_OFF,
+                    SEG_OFF, SEG_ON, SEG_ON);
+            break;
+
+        case 5:
+            set7SEG(SEG_ON, SEG_OFF, SEG_ON, SEG_ON,
+                    SEG_OFF, SEG_ON, SEG_ON);
+            break;
+
+        case 6:
+            set7SEG(SEG_ON, SEG_OFF, SEG_ON, SEG_ON,
+                    SEG_ON, SEG_ON, SEG_ON);
+            break;
+
+        case 7:
+            set7SEG(SEG_ON, SEG_ON, SEG_ON, SEG_OFF,
+                    SEG_OFF, SEG_OFF, SEG_OFF);
+            break;
+
+        case 8:
+            set7SEG(SEG_ON, SEG_ON, SEG_ON, SEG_ON,
+                    SEG_ON, SEG_ON, SEG_ON);
+            break;
+
+        case 9:
+            set7SEG(SEG_ON, SEG_ON, SEG_ON, SEG_ON,
+                    SEG_OFF, SEG_ON, SEG_ON);
+            break;
+
+        default:
+            set7SEG(SEG_OFF, SEG_OFF, SEG_OFF, SEG_OFF,
+                    SEG_OFF, SEG_OFF, SEG_OFF);
+            break;
+    }
+}
 
 /* USER CODE END 0 */
 
@@ -101,52 +180,11 @@ while (1)
 
     /* USER CODE BEGIN 3 */
 
-    /* NS GREEN - EW RED */
-    HAL_GPIO_WritePin(RED_LED_GPIO_Port, RED_LED_Pin, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(YELLOW_LED_GPIO_Port, YELLOW_LED_Pin, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(GREEN_LED_GPIO_Port, GREEN_LED_Pin, GPIO_PIN_RESET);
-
-    HAL_GPIO_WritePin(RED_LED2_GPIO_Port, RED_LED2_Pin, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(YELLOW_LED2_GPIO_Port, YELLOW_LED2_Pin, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(GREEN_LED2_GPIO_Port, GREEN_LED2_Pin, GPIO_PIN_SET);
-
-    HAL_Delay(greenTime);
-
-
-    /* NS YELLOW - EW RED */
-    HAL_GPIO_WritePin(RED_LED_GPIO_Port, RED_LED_Pin, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(YELLOW_LED_GPIO_Port, YELLOW_LED_Pin, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(GREEN_LED_GPIO_Port, GREEN_LED_Pin, GPIO_PIN_SET);
-
-    HAL_GPIO_WritePin(RED_LED2_GPIO_Port, RED_LED2_Pin, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(YELLOW_LED2_GPIO_Port, YELLOW_LED2_Pin, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(GREEN_LED2_GPIO_Port, GREEN_LED2_Pin, GPIO_PIN_SET);
-
-    HAL_Delay(yellowTime);
-
-
-    /* NS RED - EW GREEN */
-    HAL_GPIO_WritePin(RED_LED_GPIO_Port, RED_LED_Pin, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(YELLOW_LED_GPIO_Port, YELLOW_LED_Pin, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(GREEN_LED_GPIO_Port, GREEN_LED_Pin, GPIO_PIN_SET);
-
-    HAL_GPIO_WritePin(RED_LED2_GPIO_Port, RED_LED2_Pin, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(YELLOW_LED2_GPIO_Port, YELLOW_LED2_Pin, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(GREEN_LED2_GPIO_Port, GREEN_LED2_Pin, GPIO_PIN_RESET);
-
-    HAL_Delay(greenTime);
-
-
-    /* NS RED - EW YELLOW */
-    HAL_GPIO_WritePin(RED_LED_GPIO_Port, RED_LED_Pin, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(YELLOW_LED_GPIO_Port, YELLOW_LED_Pin, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(GREEN_LED_GPIO_Port, GREEN_LED_Pin, GPIO_PIN_SET);
-
-    HAL_GPIO_WritePin(RED_LED2_GPIO_Port, RED_LED2_Pin, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(YELLOW_LED2_GPIO_Port, YELLOW_LED2_Pin, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(GREEN_LED2_GPIO_Port, GREEN_LED2_Pin, GPIO_PIN_SET);
-
-    HAL_Delay(yellowTime);
+    for (int i = 0; i <= 9; i++)
+    {
+        display7SEG(i);
+        HAL_Delay(1000);
+    }
 }
 /* USER CODE END 3 */
 }
