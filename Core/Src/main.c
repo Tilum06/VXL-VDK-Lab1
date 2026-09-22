@@ -22,9 +22,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-//#include "ex1.h"
-//#include "ex2.h"
-#include "ex5.h"
+
 
 
 /* USER CODE END Includes */
@@ -67,50 +65,63 @@ static void MX_GPIO_Init(void);
   */
 int main(void)
 {
-  /* USER CODE BEGIN 1 */
+/* USER CODE BEGIN 1 */
+uint32_t redTime = 5000;
+uint32_t yellowTime = 2000;
+uint32_t greenTime = 3000;
+/* USER CODE END 1 */
 
-  /* USER CODE END 1 */
+/* MCU Configuration--------------------------------------------------------*/
 
-  /* MCU Configuration--------------------------------------------------------*/
+/* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+HAL_Init();
 
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  HAL_Init();
+/* USER CODE BEGIN Init */
 
-  /* USER CODE BEGIN Init */
+/* USER CODE END Init */
 
-  /* USER CODE END Init */
+/* Configure the system clock */
+SystemClock_Config();
 
-  /* Configure the system clock */
-  SystemClock_Config();
+/* USER CODE BEGIN SysInit */
 
-  /* USER CODE BEGIN SysInit */
+/* USER CODE END SysInit */
 
-  /* USER CODE END SysInit */
+/* Initialize all configured peripherals */
+MX_GPIO_Init();
+/* USER CODE BEGIN 2 */
 
-  /* Initialize all configured peripherals */
-  MX_GPIO_Init();
-  /* USER CODE BEGIN 2 */
-  	  HAL_GPIO_WritePin(RED_LED_GPIO_Port, RED_LED_Pin, GPIO_PIN_SET);
-  	  HAL_GPIO_WritePin(YELLOW_LED_GPIO_Port, YELLOW_LED_Pin, GPIO_PIN_RESET);
 
-  /* USER CODE END 2 */
+/* Infinite loop */
+/* USER CODE BEGIN WHILE */
 
-  /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
+while (1)
+{
+  //GREEN
+	  HAL_GPIO_WritePin(RED_LED_GPIO_Port, RED_LED_Pin, GPIO_PIN_SET);
+	  HAL_GPIO_WritePin(YELLOW_LED_GPIO_Port, YELLOW_LED_Pin, GPIO_PIN_SET);
+	  HAL_GPIO_WritePin(GREEN_LED_GPIO_Port, GREEN_LED_Pin, GPIO_PIN_RESET);
 
-  while (1)
-  {
-	  HAL_GPIO_TogglePin(RED_LED_GPIO_Port , RED_LED_Pin );
-	  HAL_GPIO_TogglePin(YELLOW_LED_GPIO_Port, YELLOW_LED_Pin);
-	  HAL_Delay(2000);
+	  HAL_Delay(greenTime);
+  //YELLOW
+	  HAL_GPIO_WritePin(RED_LED_GPIO_Port, RED_LED_Pin, GPIO_PIN_SET);
+	  HAL_GPIO_WritePin(YELLOW_LED_GPIO_Port, YELLOW_LED_Pin, GPIO_PIN_RESET);
+	  HAL_GPIO_WritePin(GREEN_LED_GPIO_Port, GREEN_LED_Pin, GPIO_PIN_SET);
 
-    /* USER CODE END WHILE */
+	  HAL_Delay(yellowTime);
+  //RED
+	  HAL_GPIO_WritePin(RED_LED_GPIO_Port, RED_LED_Pin, GPIO_PIN_RESET);
+	  HAL_GPIO_WritePin(YELLOW_LED_GPIO_Port, YELLOW_LED_Pin, GPIO_PIN_SET);
+	  HAL_GPIO_WritePin(GREEN_LED_GPIO_Port, GREEN_LED_Pin, GPIO_PIN_SET);
 
-    /* USER CODE BEGIN 3 */
-  }
-  /* USER CODE END 3 */
+	  HAL_Delay(redTime);
+
+/* USER CODE END WHILE */
+
+/* USER CODE BEGIN 3 */
 }
-
+/* USER CODE END 3 */
+}
 /**
   * @brief System Clock Configuration
   * @retval None
