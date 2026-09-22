@@ -1,0 +1,15 @@
+# STM32 build
+Debug/
+Release/
+
+# IDE temporary files
+.metadata/
+
+# Proteus temporary files
+*.pdsbak
+*.workspace
+*.log
+
+# Windows
+Thumbs.db
+Desktop.ini
