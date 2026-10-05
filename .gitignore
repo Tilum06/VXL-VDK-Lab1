@@ -2,13 +2,9 @@
 Debug/
 Release/
 
-# IDE temporary files
+# STM32CubeIDE generated settings / temporary files
+.settings/
 .metadata/
-
-# Proteus temporary files
-*.pdsbak
-*.workspace
-*.log
 
 # Windows
 Thumbs.db
