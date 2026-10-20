@@ -232,22 +232,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
 while (1)
 {
-    if (testLed < 12)
-    {
-        if (testLed == 0)
-        {
-            clearAllClock();
-        }
-        else
-        {
-            clearNumberOnClock(testLed - 1);
-        }
 
-        setNumberOnClock(testLed);
-        testLed++;
-    }
-    else
-    {
         clearAllClock();
         setNumberOnClock(hour % 12);
         setNumberOnClock(minute / 5);
@@ -270,7 +255,7 @@ while (1)
         {
             hour = 0;
         }
-    }
+
 
     HAL_Delay(1000);
 }
