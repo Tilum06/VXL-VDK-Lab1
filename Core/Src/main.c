@@ -198,7 +198,7 @@ void clearNumberOnClock(int num)
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-  int testLed = 0;
+
   int hour = 6;
   int minute = 50;
   int second = 0;
@@ -234,9 +234,9 @@ while (1)
 {
 
         clearAllClock();
-        setNumberOnClock(hour % 12);
-        setNumberOnClock(minute / 5);
-        setNumberOnClock(second / 5);
+        setNumberOnClock((hour % 12 + 1) % 12);
+        setNumberOnClock((minute / 5 + 1) % 12);
+        setNumberOnClock((second / 5 + 1) % 12);
 
         second++;
         if (second >= 60)
