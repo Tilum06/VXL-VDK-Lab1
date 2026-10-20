@@ -198,6 +198,10 @@ void clearNumberOnClock(int num)
 int main(void)
 {
   /* USER CODE BEGIN 1 */
+  int testLed = 0;
+  int hour = 6;
+  int minute = 50;
+  int second = 0;
 
   /* USER CODE END 1 */
 
@@ -220,21 +224,7 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
-
-  //ex6
   clearAllClock();
-  for (int i = 0; i < 12; i++)
-    {
-        setNumberOnClock(i);
-        HAL_Delay(500);
-
-        clearNumberOnClock(i);
-    }
-
-  //ex10
-  int hour = 6;
-  int minute = 50;
-  int second = 0;
 
   /* USER CODE END 2 */
 
@@ -242,38 +232,47 @@ int main(void)
   /* USER CODE BEGIN WHILE */
 while (1)
 {
-    /* USER CODE END WHILE */
-
-    /* USER CODE BEGIN 3 */
-
-
-    //ex10
-    clearAllClock();
-
-    setNumberOnClock((hour % 12 + 1) % 12);
-    setNumberOnClock((minute / 5 + 1) % 12);
-    setNumberOnClock((second / 5 + 1) % 12);
-
-    HAL_Delay(20);
-
-    second++;
-
-    if (second >= 60)
+    if (testLed < 12)
     {
-        second = 0;
-        minute++;
+        if (testLed == 0)
+        {
+            clearAllClock();
+        }
+        else
+        {
+            clearNumberOnClock(testLed - 1);
+        }
+
+        setNumberOnClock(testLed);
+        testLed++;
+    }
+    else
+    {
+        clearAllClock();
+        setNumberOnClock(hour % 12);
+        setNumberOnClock(minute / 5);
+        setNumberOnClock(second / 5);
+
+        second++;
+        if (second >= 60)
+        {
+            second = 0;
+            minute++;
+        }
+
+        if (minute >= 60)
+        {
+            minute = 0;
+            hour++;
+        }
+
+        if (hour >= 12)
+        {
+            hour = 0;
+        }
     }
 
-    if (minute >= 60)
-    {
-        minute = 0;
-        hour++;
-    }
-
-    if (hour >= 24)
-    {
-        hour = 0;
-    }
+    HAL_Delay(1000);
 }
   /* USER CODE END 3 */
 }
