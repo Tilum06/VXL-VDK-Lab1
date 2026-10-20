@@ -146,6 +146,7 @@ void display7SEG(int num)
 int main(void)
 {
 /* USER CODE BEGIN 1 */
+int counter = 0;
 
 /* USER CODE END 1 */
 
@@ -176,15 +177,14 @@ MX_GPIO_Init();
 /* USER CODE BEGIN WHILE */
 while (1)
 {
-    /* USER CODE END WHILE */
-
-    /* USER CODE BEGIN 3 */
-
-    for (int i = 0; i <= 9; i++)
+    display7SEG(counter);
+    counter++;
+    if (counter >= 10)
     {
-        display7SEG(i);
-        HAL_Delay(1000);
+        counter = 0;
     }
+
+    HAL_Delay(1000);
 }
 /* USER CODE END 3 */
 }
