@@ -66,9 +66,7 @@ static void MX_GPIO_Init(void);
 int main(void)
 {
 /* USER CODE BEGIN 1 */
-uint32_t redTime = 5000;
-uint32_t yellowTime = 2000;
-uint32_t greenTime = 3000;
+int counter = 0;
 /* USER CODE END 1 */
 
 /* MCU Configuration--------------------------------------------------------*/
@@ -97,24 +95,32 @@ MX_GPIO_Init();
 
 while (1)
 {
-  //GREEN
+  if (counter < 3)
+  {
 	  HAL_GPIO_WritePin(RED_LED_GPIO_Port, RED_LED_Pin, GPIO_PIN_SET);
 	  HAL_GPIO_WritePin(YELLOW_LED_GPIO_Port, YELLOW_LED_Pin, GPIO_PIN_SET);
 	  HAL_GPIO_WritePin(GREEN_LED_GPIO_Port, GREEN_LED_Pin, GPIO_PIN_RESET);
-
-	  HAL_Delay(greenTime);
-  //YELLOW
+  }
+  else if (counter < 5)
+  {
 	  HAL_GPIO_WritePin(RED_LED_GPIO_Port, RED_LED_Pin, GPIO_PIN_SET);
 	  HAL_GPIO_WritePin(YELLOW_LED_GPIO_Port, YELLOW_LED_Pin, GPIO_PIN_RESET);
 	  HAL_GPIO_WritePin(GREEN_LED_GPIO_Port, GREEN_LED_Pin, GPIO_PIN_SET);
-
-	  HAL_Delay(yellowTime);
-  //RED
+  }
+  else
+  {
 	  HAL_GPIO_WritePin(RED_LED_GPIO_Port, RED_LED_Pin, GPIO_PIN_RESET);
 	  HAL_GPIO_WritePin(YELLOW_LED_GPIO_Port, YELLOW_LED_Pin, GPIO_PIN_SET);
 	  HAL_GPIO_WritePin(GREEN_LED_GPIO_Port, GREEN_LED_Pin, GPIO_PIN_SET);
+  }
 
-	  HAL_Delay(redTime);
+  counter++;
+  if (counter >= 10)
+  {
+    counter = 0;
+  }
+
+  HAL_Delay(1000);
 
 /* USER CODE END WHILE */
 
